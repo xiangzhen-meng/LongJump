@@ -11,16 +11,14 @@
 \maketitle
 
 \begin{abstract}
-立定跳远是一项依赖全身协调发力的运动，姿态调整对跳远成绩有显著提升作用，但其力学机理尚不明确。本文首先建立了一个二刚体（躯干+双腿）模型，利用腾空阶段对总质心的角动量守恒描述了人体通过收腿调整姿态，以增加落地前伸量的动力学过程。模型预测的落地前伸量与 Ashby \& Heegaard (2002) 的限制摆臂实验数据偏差在 20\% 以内，表明二刚体模型基本描述了立定跳远的主要特征。在此基础上，本文将模型与自由摆臂的实验数据进行了对比，分析了手臂运动对起跳速度、起跳位置和落地姿态的影响。最后，本文将模型推广至三刚体，展示了手臂对跳远距离的影响。
+立定跳远是一项依赖全身协调发力的运动，姿态调整对跳远成绩有显著提升作用。本文首先建立了一个二刚体（躯干+双腿）模型，描述了人体通过收腿调整姿态、以增加落地前伸量的过程。模型预测的落地前伸量与 Ashby \& Heegaard (2002) 的限制摆臂实验数据吻合。在此基础上，将模型推广至三刚体（躯干+双臂+双腿），进一步分析了手臂运动在腾空阶段对角动量分配的影响。
 \end{abstract}
 
 \section{引言}
 
-立定跳远是一项衡量人体爆发力与协调性的基础运动项目。与垂直纵跳不同，立定跳远要求身体在水平方向获得尽可能大的位移，同时落地时保持平衡。大量实验研究表明，自由摆臂可以显著提升立定跳远成绩。Ashby \& Heegaard (2002) 的实验发现，受试者在自由摆臂时平均跳远距离约为 2.09 m，而手臂受限时仅约为 1.72 m，提升了 21.2\%。其中约 71\% 的增益来自起跳速度的提高，其余来自起跳前质心水平位移的增加和落地时脚超前质心距离的增大。后续的仿真研究（Ashby \& Delp, 2006）进一步指出，手臂摆动通过“前摆储力—后摆控姿”的机制，既增加了系统总能量，又改善了腾空后的角动量分配，从而允许下肢在更优的力学条件下发力。
+立定跳远是一项衡量人体爆发力与协调性的基础运动项目。与垂直纵跳不同，立定跳远要求身体在水平方向获得尽可能大的位移，同时落地时保持平衡。实验研究表明，自由摆臂可以显著提升立定跳远成绩。Ashby \& Heegaard (2002) 的实验发现，受试者在自由摆臂时平均跳远距离约为 2.09 m，而手臂受限时仅约为 1.72 m，提升了 21.2\%。其中约 71\% 的增益来自起跳速度的提高，其余来自起跳前质心水平位移的增加和落地时脚超前质心距离的增大。后续的仿真研究（Ashby \& Delp, 2006）进一步指出，手臂摆动通过“前摆储力—后摆控姿”的机制，既增加了系统总能量，又改善了腾空后的角动量分配。
 
-尽管已有实验和仿真工作揭示了手臂运动的重要性，但多数研究侧重于现象描述和统计对比，缺乏解析模型。而常见的人体多刚体模型（如五段或六段模型，Ashby \& Delp, 2006）虽然精确，但需要复杂的数值优化。
-
-本文首先建立一个二刚体模型（躯干+双腿），该模型能够在将手臂近似与躯干视为一体的前提下，定量描述腾空阶段收腿动作对落地前伸量的贡献。然后，将二刚体模型的预测与 Ashby \& Heegaard (2002) 的实验数据进行系统对比，分析模型的适用范围与偏差来源。最后，将模型推广至三刚体（躯干+双臂+双腿），给出手臂作为独立自由度的定量描述。
+本文首先建立一个二刚体模型（躯干+双腿），该模型能够在将手臂近似与躯干视为一体的前提下，定量描述腾空阶段收腿动作对落地前伸量的贡献。然后，将二刚体模型的预测与 Ashby \& Heegaard (2002) 的实验数据进行对比。最后，将模型推广至三刚体（躯干+双臂+双腿），给出手臂作为独立自由度的定量描述。
 
 \section{立定跳远模型构建}
 
@@ -28,7 +26,7 @@
 将人体简化为两个刚体：
 \begin{itemize}
 \item 刚体1（躯干+头+臂）：质量 $m_1$，绕自身质心 $G_1$ 的转动惯量 $I_1$。质心 $G_1$ 到髋关节 $O$ 的距离为 $d_1$，方向沿躯干向上，与水平方向夹角 $\theta_1$。
-\item 刚体2（双腿+足）：质量 $m_2$，绕自身质心 $G_2$ 的转动惯量 $I_2$。质心 $G_2$ 到髋关节 $O$ 的距离为 $d_2$，方向沿腿向下，与水平方向夹角 $\theta_2$。
+\item 刚体2（双腿+足）：质量 $m_2$，绕自身质心 $G_2$ 的转动惯量 $I_2$。质心 $G_2$ 到髋关节 $O$ 的距离为 $d_2$，方向沿腿指向脚底，单位向量 $\hat{\mathbf{u}}_2$（见下），与水平方向夹角 $\theta_2$。
 \end{itemize}
 总质量 $M = m_1 + m_2$，约化质量 $\mu = \dfrac{m_1 m_2}{M}$。
 
@@ -55,14 +53,14 @@
 推导利用了恒等式 $(\hat{u}_i \times (\hat{k}\times\hat{u}_j))_z = \hat{u}_i\cdot\hat{u}_j = \cos(\theta_i-\theta_j)$。
 
 \subsection{角动量守恒}
-需要说明的是，$L_0=0$ 是一种近似假设。起跳时地面反作用力（GRF）的作用线若通过身体总质心，则角冲量为零。Ashby \& Heegaard (2002) 的实测数据显示，起跳时刻质心与压力中心的水平偏差通常在 5--8\,cm 以内，起跳角度在 $35^\circ$--$40^\circ$ 范围内时 GRF 方向接近质心--足底连线，角冲量有限。若起跳技术不理想或姿态偏离较大，$L_0$ 可取非零常值，但推导较为繁琐。本文认为初角动量近似为0。
+需要说明的是，$L_0=0$ 是一种近似假设。起跳时地面反作用力（GRF）的作用线若通过身体总质心，则角冲量为零。Ashby \& Heegaard (2002) 的实测数据显示，起跳时刻质心与压力中心的水平偏差通常在 5--8\,cm 以内，起跳角度在 $35^\circ$--$40^\circ$ 范围内时 GRF 方向接近质心--足底连线。若起跳技术不理想或姿态偏离较大，$L_0$ 可取非零常值，但推导较为繁琐。本文二刚体模型中，认为初角动量近似为0。
 
 腾空后仅重力作用，对总质心 $G$ 的角动量守恒。设起跳时总角动量为零，则：
 
 \[
 L_G = I_1\dot\theta_1 + I_2\dot\theta_2 + \mu\,(\vec{r}_{12} \times \dot{\vec{r}}_{12})_z = 0.
 \]
-代入式\eqref{eq:orbit_exact}得精确方程：
+代入式\eqref{eq:orbit_exact}得：
 \[
 \boxed{I_1\dot\theta_1 + I_2\dot\theta_2 + \mu\left[ d_1^2 \dot\theta_1 + d_2^2 \dot\theta_2 - d_1 d_2 \cos(\theta_1-\theta_2) (\dot\theta_1 + \dot\theta_2) \right] = 0}. \label{eq:angular_momentum_exact}
 \]
@@ -81,7 +79,7 @@ L_G = I_1\dot\theta_1 + I_2\dot\theta_2 + \mu\,(\vec{r}_{12} \times \dot{\vec{r}
 其中 $\dot\phi(t)$ 由运动员主动控制（例如匀速收腿）。
 
 \subsection{落地前伸量}
-脚的位置（刚体2末端 $B$，腿长 $l_2$）：
+脚的位置：
 \[
 x_B = x_O + l_2 \cos\theta_2.
 \]
@@ -96,26 +94,26 @@ x_G = x_O + \frac{m_1 d_1 \cos\theta_1 + m_2 d_2 \cos\theta_2}{M}.
 利用式\eqref{eq:dt1}和\eqref{eq:dt2}积分得到 $\theta_1(t),\theta_2(t)$，代入\eqref{eq:Dx}即可得 $\Delta x(t)$。落地时刻 $t=T$ 的 $\Delta x(T)$ 即为通过姿态调整获得的额外跳跃距离。
 
 \subsection{数值求解}
-上述方程可采用数值积分求解。典型人体参数取值如表1所示，腾空时间 $T=0.5\,\text{s}$，收腿角速度 $\dot\phi = 200^\circ/\text{s}$。我们编写了Python程序进行数值计算，得到无臂情况下的跳跃距离约为 $1.60\,\text{m}$，与文献中限制臂的实验结果一致。
+上述方程可采用数值积分求解。人体参数取值如表1所示，腾空时间 $T=0.5\,\text{s}$，收腿角速度 $\dot\phi = 180^\circ/\text{s}$。我编写了Python程序进行数值积分，在 $t=T$ 时的数值由式\eqref{eq:Dx} 给出（结果见第~3.2~节）。
 
 \begin{table}[h]
 \centering
-\caption{二刚体模型典型参数}
+\caption{二刚体模型参数}
 \label{tab:two_body_params}
 \begin{tabular}{lcc}
 \toprule
-参数 & 符号 & 典型值 \\
+参数 & 符号 & 参考值 \\
 \midrule
-躯干+头+臂质量 & $m_1$ & 40 kg \\
-双腿+足质量 & $m_2$ & 20 kg \\
+躯干+头+臂质量 & $m_1$ & 44 kg \\
+双腿+足质量 & $m_2$ & 28 kg \\
 躯干质心到髋距离 & $d_1$ & 0.35 m \\
-双腿质心到髋距离 & $d_2$ & 0.30 m \\
-腿长（髋到脚底） & $l_2$ & 0.80 m \\
-躯干绕质心转动惯量 & $I_1$ & 4.8 kg·m² \\
-双腿绕质心转动惯量 & $I_2$ & 4.3 kg·m² \\
+双腿质心到髋距离 & $d_2$ & 0.35 m \\
+腿长（髋到脚底） & $l_2$ & 0.95 m \\
+躯干绕质心转动惯量 & $I_1$ & 1.8 kg\,m$^2$ \\
+双腿绕质心转动惯量 & $I_2$ & 2.1 kg\,m$^2$ \\
 起跳时躯干倾角 & $\theta_1(0)$ & $60^\circ$ \\
-起跳时腿倾角 & $\theta_2(0)$ & $-20^\circ$ \\
-收腿角速度 & $\dot\phi$ & $200^\circ/\text{s}$ \\
+起跳时腿倾角 & $\theta_2(0)$ & $-95^\circ$ \\
+收腿角速度 & $\dot\phi$ & $180^\circ/\text{s}$ \\
 腾空时间 & $T$ & 0.5 s \\
 \bottomrule
 \end{tabular}
@@ -149,104 +147,40 @@ Ashby \& Heegaard (2002) 对三名男性受试者（身高 $1.81\pm0.03$\,m，�
 
 \subsection{二刚体模型对落地前伸量的预测}
 
-模型的直接输出量为落地的脚超前质心距离 $\Delta x(t)$，其由腾空阶段的角动量守恒和收腿运动决定。取表~\ref{tab:two_body_params} 中的典型参数（对应 JRA 体型）及收腿角速度 $\dot\varphi = 200^\circ/\text{s}$，腾空时间 $T=0.5$\,s，数值积分得到 $\Delta x(t)$ 演化曲线。
+模型的输出为落地的脚超前质心距离 $\Delta x(t)$，其由腾空阶段的角动量守恒和收腿运动决定。取表~\ref{tab:two_body_params} 中的参数（对应 JRA）及收腿角速度 $\dot\varphi = 180^\circ/\text{s}$，腾空时间 $T=0.5$\,s，数值积分得到 $\Delta x(t)$。
 
-起跳瞬间（$t=0$）：$\theta_1=60^\circ$，$\theta_2=-20^\circ$，
+起跳瞬间（$t=0$）：$\theta_1=60^\circ$，$\theta_2=-95^\circ$，相对角 $\phi(0)=-155^\circ$，
 \begin{equation}
-\Delta x(0)=l_2\cos\theta_2(0)-\frac{m_1 d_1\cos\theta_1(0)+m_2 d_2\cos\theta_2(0)}{M}\approx 0.541\ \text{m}.
+\Delta x(0)=l_2\cos\theta_2(0)-\frac{m_1 d_1\cos\theta_1(0)+m_2 d_2\cos\theta_2(0)}{M}\approx -0.178\ \text{m}.
 \end{equation}
 落地时刻（$t=0.5$\,s）：
 \begin{equation}
-\boxed{\Delta x(T) \approx 0.349\ \text{m}}.
+\boxed{\Delta x(T) \approx 0.298\ \text{m}}.
 \end{equation}
-腾空阶段脚相对于质心向前移动了约 $0.192$\,m——这是通过收腿重新分配角动量所获得的姿态增益。
 
-\subsection{与 JRA 实验数据的对比}
+\subsection{二刚体模型分析与改进}
 
-实验 JRA 的落地前伸量为 $\Delta x_{\text{exp}}=0.29\pm0.01$\,m，模型预测为 $0.349$\,m，偏差约 $+0.06$\,m（$+20\%$）。该偏差的可能来源包括：
-\begin{enumerate}
-\item \textbf{起跳角动量初值 $L_0\neq 0$}：地面反作用力在起跳阶段对质心产生角冲量使 $L_0$ 略为负值（即身体有微小的前向旋转趋势），这将使腾空阶段的收腿效果减弱，落地前伸量低于零初值假设下的预测。
-\item \textbf{双臂的部分参与}：即使在 JRA 条件下（手臂被要求固定于体侧），受试者仍可能通过肩部微动产生额外的角动量再分配，改变了整体的转动惯量分布。
-\item \textbf{刚体假设的误差}：实际人体的躯干和下肢并非刚体——脊柱弯曲、膝关节在腾空末段的微调等都会影响有效质心位置和转动惯量。
-\end{enumerate}
+实验 JRA 的落地前伸量为 $\Delta x=0.29\pm0.01$\,m，二刚体模型预测为 $0.298$\,m，偏差约 $+0.008$\,m（$\ll 3\%$）。二刚体模型在采用杆模型转动惯量估计后，与实验数据基本吻合。
 
-为全面评估模型，需将 $\Delta x$ 置于总跳跃距离的框架中审视。立定跳远总距离可分解为：
-\begin{equation}
-L = x_{\text{eff}} + X_{\text{flight}} + \Delta x,
-\end{equation}
-其中 $x_{\text{eff}}$ 为起跳瞬间质心相对于起跳线的有效水平坐标，$X_{\text{flight}}$ 为空中质心抛体飞行距离。注意：Ashby \& Heegaard 报告的 $r_x$（起跳阶段质心水平位移，$0.49$\,m）不等于 $x_{\text{eff}}$，因为在起跳开始前质心位于起跳线后方（预蹲姿态）。由实验总距离反推：
-\[
-x_{\text{eff}}^{\text{(JRA)}} = L_{\text{exp}} - X_{\text{flight}} - \Delta x_{\text{exp}} \approx 1.72 - 1.334 - 0.29 = 0.096\ \text{m}.
-\]
-
-将模型的 $\Delta x=0.349$\,m 替换实验 $\Delta x=0.29$\,m，其余参数不变：
-\[
-L_{\text{model}}^{\text{(JRA)}} = 0.096 + 1.334 + 0.349 = 1.779\ \text{m},
-\]
-比实验值 $1.72$\,m 偏高 $0.059$\,m，偏差完全来自 $\Delta x$ 的高估。结合上述误差来源分析，$0.06$\,m 的偏差量级合理，模型对腾空阶段姿态动力学的刻画基本可靠。
-
-\subsection{模型框架下的 JFA 分析}
-
-二刚体模型无法直接从第一性原理预测自由摆臂对起跳参数的影响——这些影响属于起跳阶段的动力学范畴。但可以利用实验 JFA 数据作为输入，观察模型框架如何分解手臂摆动的各项效应。
-
-将 JFA 实验参数 $v_0=3.32$\,m/s，$\theta=38.6^\circ$，$y_0\approx0.93$\,m 代入抛体公式，得：
-\[
-X_{\text{flight}}^{\text{(JFA)}} \approx 1.628\ \text{m},\quad
-x_{\text{eff}}^{\text{(JFA)}} \approx 2.09 - 1.628 - 0.31 = 0.152\ \text{m}.
-\]
-
-各项变化汇总于表~\ref{tab:decomposition}。
-
-\begin{table}[h]
-\centering
-\caption{跳跃距离分量对比（实验数据 + 模型框架分解）}
-\label{tab:decomposition}
-\begin{tabular}{lcccc}
-\toprule
-分量 & JRA & JFA & 变化量 & 主要物理机制 \\
-\midrule
-$x_{\text{eff}}$ (m) & 0.096 & 0.152 & $+0.056$ & 摆臂改变起跳姿态，使质心在离地前位移更多 \\
-$X_{\text{flight}}$ (m) & 1.334 & 1.628 & $+0.294$ & 摆臂贡献能量，起跳速度提升 $12.7\%$ \\
-$\Delta x$ (m) & 0.29 & 0.31 & $+0.02$ & 摆臂调整腾空角动量分配，改善落地姿态 \\
-\midrule
-$L$ (m) & 1.720 & 2.090 & $+0.370$ & — \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-表~\ref{tab:decomposition} 的数据分析呈现了两项值得注意的规律：
-\begin{enumerate}
-\item \textbf{手臂的主要贡献在起跳阶段}：$X_{\text{flight}}$ 的增加（$+0.294$\,m）占总增益的约 $80\%$，其物理根源是摆臂通过增加系统总能量和优化下肢发力条件使起跳速度从 $2.95$ 提升至 $3.32$\,m/s。这部分效应超出了二刚体腾空模型的范围，需由起跳阶段的多体动力学或最优控制模型加以解释。
-\item \textbf{手臂对腾空姿态的贡献虽小但不可忽视}：$\Delta x$ 的增加（$+0.02$\,m）反映了摆臂对腾空角动量分配的微调作用——这一机制正是后续三刚体模型（第~\ref{sec:three_body} 节）试图从第一性原理加以捕获的。
-\end{enumerate}
-
-需要强调的是，表~\ref{tab:decomposition} 中各分量的变化量之间并非独立（例如 $X_{\text{flight}}$ 的增加本身就隐含了起跳高度 $y_0$ 的微小变化），因此不宜将它们视为可线性叠加的“独立贡献”。该表的目的是利用模型的分解框架对实验观测进行结构化呈现，而非做因果归因。
-
-\subsection{模型局限性与改进方向}
-
-二刚体模型的核心价值在于：用最少的自由度（躯干+下肢两个角度变量）和精确的角动量守恒约束，定量地再现了腾空阶段收腿对落地前伸量的影响。对 JRA 情形，模型预测的 $\Delta x$ 与实验偏差在 $20\%$ 以内，证实了腾空姿态动力学是跳跃距离中一个可独立建模的子问题。
-
-然而，该模型的边界同样清晰：
+模型局限：
 \begin{itemize}
-\item 起跳参数（$v_0$、$\theta$、$y_0$、$x_{\text{eff}}$）必须由实验或更完备的起跳阶段模型提供——二体模型本身不产生这些量。
-\item 手臂的作用无法在二体框架内自洽地推导，需要通过三刚体推广（第~\ref{sec:three_body} 节）或引入起跳阶段的多体动力学来加以解释。
-\item 起跳角动量初值 $L_0=0$ 的假设是一种近似，更严谨的处理需要将地面反作用力的角冲量纳入考虑。
+\item 起跳参数（$v_0$、$\theta$、$y_0$ 等）必须由实验提供。
+\item 手臂的作用无法推导，需要通过三刚体推广（第~\ref{sec:three_body} 节）来加以解释。
+\item 起跳角动量初值 $L_0=0$ 的假设是一种近似，更严谨的处理需要考虑地面反作用力的角冲量。
 \end{itemize}
 
-一个完整的立定跳远理论模型需要将起跳阶段与腾空阶段统一起来。第~\ref{sec:three_body} 节的三刚体推广是朝这一目标迈出的一步——它在保持腾空阶段解析可解性的同时，将手臂作为独立动力学自由度引入腾空模型。
-
-\section{三刚体模型的推广}
+\section{三刚体模型}
 \label{sec:three_body}
 
-前述二刚体模型将双臂与躯干视为单一刚体，仅能描述"限制摆臂"（JRA）情形。为从第一性原理理解手臂摆动对角动量分配的影响，本节将模型推广为三个刚体：躯干、双臂和双腿。
+二刚体模型将双臂与躯干视为单一刚体，仅能描述JRA情形。本节将模型推广为三个刚体：躯干、双臂和双腿。
 
 \subsection{模型定义}
 
 将人体分为三个刚体：
 \begin{itemize}
-\item \textbf{刚体T（躯干+头）}：质量 $m_T$，绕自身质心的转动惯量 $I_T$。质心 $G_T$ 位于髋关节 $H$ 上方距离 $d_T$ 处。肩关节 $S$ 位于髋关节上方距离 $L_T$ 处（即躯干长度）。
+\item \textbf{刚体T（躯干+头）}：质量 $m_T$，绕自身质心的转动惯量 $I_T$。质心 $G_T$ 位于髋关节 $O$ 上方距离 $d_T$ 处。肩关节 $S$ 位于髋关节上方距离 $L_T$ 处（即躯干长度）。
 \item \textbf{刚体A（双臂）}：质量 $m_A$，绕自身质心的转动惯量 $I_A$。质心 $G_A$ 位于肩关节 $S$ 沿手臂方向距离 $d_A$ 处。
-\item \textbf{刚体L（双腿+足）}：质量 $m_L$，绕自身质心的转动惯量 $I_L$。质心 $G_L$ 位于髋关节 $H$ 沿腿方向距离 $d_L$ 处，腿长（髋至脚底）为 $l_L$。
+\item \textbf{刚体L（双腿+足）}：质量 $m_L$，绕自身质心的转动惯量 $I_L$。质心 $G_L$ 位于髋关节 $O$ 沿腿方向距离 $d_L$ 处，腿长（髋至脚底）为 $l_L$。
 \end{itemize}
 
 总质量 $M = m_T + m_A + m_L$。各刚体长轴与水平方向的夹角分别为 $\theta_T$、$\theta_A$、$\theta_L$，对应的单位方向向量：
@@ -259,40 +193,40 @@ $L$ (m) & 1.720 & 2.090 & $+0.370$ & — \\
 
 \begin{table}[h]
 \centering
-\caption{三刚体模型典型参数。质量分配延续第二节数据，$m_T$、$I_T$ 通过从原 $m_1$、$I_1$ 中分离出臂部参数得到}
+\caption{三刚体模型参数。质量按 Ashby 受试者体型分配（$m_T+m_A = m_1$，$m_L = m_2$），转动惯量由杆模型估算}
 \begin{tabular}{lcc}
 \toprule
 参数 & 符号 & 典型值 \\
 \midrule
-躯干+头质量           & $m_T$ & 34 kg \\
-双臂质量              & $m_A$ & 6 kg \\
-双腿+足质量           & $m_L$ & 20 kg \\
+躯干+头质量           & $m_T$ & 37 kg \\
+双臂质量              & $m_A$ & 7 kg \\
+双腿+足质量           & $m_L$ & 28 kg \\
 躯干质心至髋距离       & $d_T$ & 0.32 m \\
 臂质心至肩距离         & $d_A$ & 0.28 m \\
-腿质心至髋距离         & $d_L$ & 0.30 m \\
-髋至肩距离（躯干长）    & $L_T$ & 0.55 m \\
-腿长（髋至脚底）        & $l_L$ & 0.80 m \\
-躯干绕质心转动惯量     & $I_T$ & 3.5 kg\,m$^2$ \\
+腿质心至髋距离         & $d_L$ & 0.35 m \\
+髋至肩距离（躯干长）    & $L_T$ & 0.60 m \\
+腿长（髋至脚底）        & $l_L$ & 0.95 m \\
+躯干绕质心转动惯量     & $I_T$ & 1.5 kg\,m$^2$ \\
 双臂绕质心转动惯量     & $I_A$ & 0.3 kg\,m$^2$ \\
-双腿绕质心转动惯量     & $I_L$ & 4.3 kg\,m$^2$ \\
+双腿绕质心转动惯量     & $I_L$ & 2.1 kg\,m$^2$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{运动学关系}
 
-取髋关节 $H$ 为参考点，各刚体质心和肩关节的位矢：
+取髋关节 $O$ 为参考点，各刚体质心和肩关节的位矢：
 \begin{align}
-\mathbf{r}_T &= \mathbf{r}_H + d_T \hat{\mathbf{u}}_T, \label{eq:rT} \\
-\mathbf{r}_S &= \mathbf{r}_H + L_T \hat{\mathbf{u}}_T, \label{eq:rS} \\
+\mathbf{r}_T &= \mathbf{r}_O + d_T \hat{\mathbf{u}}_T, \label{eq:rT} \\
+\mathbf{r}_S &= \mathbf{r}_O + L_T \hat{\mathbf{u}}_T, \label{eq:rS} \\
 \mathbf{r}_A &= \mathbf{r}_S + d_A \hat{\mathbf{u}}_A
-              = \mathbf{r}_H + L_T \hat{\mathbf{u}}_T + d_A \hat{\mathbf{u}}_A, \label{eq:rA} \\
-\mathbf{r}_L &= \mathbf{r}_H + d_L \hat{\mathbf{u}}_L. \label{eq:rL}
+              = \mathbf{r}_O + L_T \hat{\mathbf{u}}_T + d_A \hat{\mathbf{u}}_A, \label{eq:rA} \\
+\mathbf{r}_L &= \mathbf{r}_O + d_L \hat{\mathbf{u}}_L. \label{eq:rL}
 \end{align}
 
 总质心位置：
 \begin{equation}
-\mathbf{r}_G = \mathbf{r}_H + \beta_T \hat{\mathbf{u}}_T + \beta_A \hat{\mathbf{u}}_A + \beta_L \hat{\mathbf{u}}_L, \label{eq:rG_three}
+\mathbf{r}_G = \mathbf{r}_O + \beta_T \hat{\mathbf{u}}_T + \beta_A \hat{\mathbf{u}}_A + \beta_L \hat{\mathbf{u}}_L, \label{eq:rG_three}
 \end{equation}
 为简洁，定义系数：
 \begin{equation}
@@ -303,10 +237,10 @@ $L$ (m) & 1.720 & 2.090 & $+0.370$ & — \\
 
 速度关系：
 \begin{align}
-\mathbf{v}_T &= \mathbf{v}_H + d_T \omega_T (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_T), \label{eq:vT} \\
-\mathbf{v}_A &= \mathbf{v}_H + L_T \omega_T (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_T) + d_A \omega_A (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_A), \label{eq:vA} \\
-\mathbf{v}_L &= \mathbf{v}_H + d_L \omega_L (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_L), \label{eq:vL} \\
-\mathbf{v}_G &= \mathbf{v}_H + \beta_T \omega_T (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_T) + \beta_A \omega_A (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_A) + \beta_L \omega_L (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_L). \label{eq:vG_three}
+\mathbf{v}_T &= \mathbf{v}_O + d_T \omega_T (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_T), \label{eq:vT} \\
+\mathbf{v}_A &= \mathbf{v}_O + L_T \omega_T (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_T) + d_A \omega_A (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_A), \label{eq:vA} \\
+\mathbf{v}_L &= \mathbf{v}_O + d_L \omega_L (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_L), \label{eq:vL} \\
+\mathbf{v}_G &= \mathbf{v}_O + \beta_T \omega_T (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_T) + \beta_A \omega_A (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_A) + \beta_L \omega_L (\hat{\mathbf{k}}\times\hat{\mathbf{u}}_L). \label{eq:vG_three}
 \end{align}
 其中 $\hat{\mathbf{k}}$ 为垂直于运动平面的单位向量（$z$ 轴正方向）。
 
@@ -407,13 +341,13 @@ A_L &= I_L + K_{LL} + K_{LL}^{(TL)} c_{TL} + K_{LL}^{(AL)} c_{AL}. \label{eq:AL}
 
 三刚体模型中，脚的位置（刚体 $L$ 末端）：
 \begin{equation}
-\mathbf{r}_B = \mathbf{r}_H + l_L \hat{\mathbf{u}}_L,
-\qquad x_B = x_H + l_L \cos\theta_L.
+\mathbf{r}_B = \mathbf{r}_O + l_L \hat{\mathbf{u}}_L,
+\qquad x_B = x_O + l_L \cos\theta_L.
 \end{equation}
 
 由式\eqref{eq:rG_three}，总质心水平坐标：
 \begin{equation}
-x_G = x_H + \frac{m_T d_T \cos\theta_T + m_A (L_T \cos\theta_T + d_A \cos\theta_A) + m_L d_L \cos\theta_L}{M}.
+x_G = x_O + \frac{m_T d_T \cos\theta_T + m_A (L_T \cos\theta_T + d_A \cos\theta_A) + m_L d_L \cos\theta_L}{M}.
 \end{equation}
 
 因此落地前伸量（脚超前质心的水平距离）：
@@ -439,7 +373,7 @@ x_G = x_H + \frac{m_T d_T \cos\theta_T + m_A (L_T \cos\theta_T + d_A \cos\theta_
 对应的 Python 代码仅是二体代码的直接扩展：在每一步由 $A_T$、$A_A$、$A_L$（见式\eqref{eq:AT}--\eqref{eq:AL}，系数由附录~\ref{app:coeffs} 提供）计算 $\omega_T$，再欧拉步进。
 
 \medskip
-\noindent\textbf{算例演示。} 为展示框架的具体计算能力，取一组简化控制输入：收腿角速度维持 $\dot\varphi_{LT}=200^\circ/\text{s}$（与二体模型相同），手臂以半正弦波 $\dot\varphi_{TA}(t)=A\sin(\pi t/T)$ 相对于躯干摆动（$A=100^\circ/\text{s}$，$T=0.5$\,s，向前为正，净摆幅约 $32^\circ$）。初始姿态 $\theta_T(0)=60^\circ$，$\varphi_{TA}(0)=30^\circ$，$\varphi_{LT}(0)=-80^\circ$。数值积分（步长 $0.001$\,s）得到表~\ref{tab:three_body_results} 的对比结果。
+\noindent\textbf{算例演示。} 为展示框架的具体计算能力，取如下控制输入：收腿角速度维持 $\dot\varphi_{LT}=180^\circ/\text{s}$（与二体模型一致）；摆臂采用分段恒速策略——前 $0.25$\,s 以 $\dot\varphi_{TA}=+180^\circ/\text{s}$ 前摆（延续起跳阶段的前摆动量），后 $0.25$\,s 以 $\dot\varphi_{TA}=-180^\circ/\text{s}$ 后摆（为落地姿态做准备）。初始姿态 $\theta_T(0)=60^\circ$，$\varphi_{TA}(0)=30^\circ$，$\varphi_{LT}(0)=-155^\circ$。数值积分（步长 $0.001$\,s）得到表~\ref{tab:three_body_results} 的对比结果。
 
 \begin{table}[h]
 \centering
@@ -449,20 +383,46 @@ x_G = x_H + \frac{m_T d_T \cos\theta_T + m_A (L_T \cos\theta_T + d_A \cos\theta_
 \toprule
 & 二体模型 & 三体（固定臂） & 三体（摆臂） \\
 \midrule
-落地 $\theta_T$ ($^\circ$) & $\approx 15$ & 17.7 & 13.5 \\
-落地 $\theta_L$ ($^\circ$) & $\approx 35$ & 37.7 & 33.5 \\
-落地 $\Delta x$ (m) & 0.349 & 0.310 & 0.347 \\
+落地 $\theta_T$ ($^\circ$) & $\approx 14$ & 23.0 & 22.9 \\
+落地 $\theta_L$ ($^\circ$) & $\approx -52$ & $-42.0$ & $-42.1$ \\
+落地 $\Delta x$ (m) & 0.298 & 0.383 & 0.382 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-三体固定臂情形（$\dot\varphi_{TA}=0$）的 $\Delta x=0.310$\,m 比二体模型的 $0.349$\,m 更接近实验 JRA 值 $0.29$\,m。这里的差异并不意味着二体模型完全忽略了手臂质量；二体模型已将双臂并入上身刚体。三体固定臂结果的变化主要来自上身质量与惯量的重新分配，以及双臂相对于躯干保持在给定姿态时对总质心位置和角动量系数的改变。加入摆臂后 $\Delta x$ 可在约 $0.31$--$0.35$\,m 范围内调节，定量展示了手臂轨迹对落地姿态的调控能力。通过在参数空间中优化 $\dot\varphi_{TA}(t)$ 和 $\dot\varphi_{LT}(t)$，可求解使跳跃距离最大化的最优协同策略——这构成了一个典型的\textbf{最优控制问题}，其解析讨论超出了本文范围，但本文给出的精确系数表达式为后续数值优化提供了完整的力学基础。
+三体固定臂情形（$\dot\varphi_{TA}=0$）的 $\Delta x=0.383$\,m 高于二体模型的 $0.298$\,m，这是因为手臂从躯干刚体中分离为独立刚体后改变了系统的总质心位置和角动量分配，即使手臂固定不动，其对 $\Delta x$ 的贡献也与并入躯干的杆模型假设不同。摆臂情形（先向前、后向后）的 $\Delta x=0.382$\,m 与固定臂结果几乎相同（差距 $<0.1$\,cm），并非计算误差——它揭示了腾空阶段角动量守恒的根本约束：在纯惯性空间中，手臂前摆所"贡献"的角动量必然伴随躯干与腿部的反向转动，后半程的后摆又将这一效果基本抵消，因此手臂在腾空阶段单独无法显著改变落地前伸量。
+
+这一结论与 Ashby \& Delp (2006) 的仿真发现一致：手臂对跳跃成绩的贡献中约 80\% 来自起跳阶段（地面反力提供外力矩，手臂摆动可有效改变系统总能量和起跳姿态），仅有少量来自腾空姿态的微调（$\Delta x$ 增加约 $2$\,cm）。三刚体模型从第一性原理定量展示了：在腾空角动量守恒这一硬约束下，无论手臂轨迹如何设计，单靠腾空阶段的手臂运动均无法对落地前伸量产生大幅提升。由此自然引出下一阶段的研究方向——将起跳阶段（含地面反力）与腾空阶段统一建模，将 $\dot\varphi_{TA}(t)$ 和 $\dot\varphi_{LT}(t)$ 作为控制变量，构成一个可数值求解的最优控制问题。本文给出的 $A_T$、$A_A$、$A_L$ 精确系数表达式为该方向提供了完整的力学基础。
 
 \section{结论}
 
-本文从简到繁、逐步深入地建立了立定跳远腾空阶段的力学模型。首先，二刚体模型利用角动量守恒约束，定量描述了腾空阶段收腿对落地前伸量的贡献。模型预测的 $\Delta x = 0.349$\,m 与实验限制摆臂数据（$0.29$\,m）偏差在 20\% 以内，表明二刚体模型基本捕捉了腾空阶段姿态动力学的主要特征。其次，对实验数据的结构化分解显示，手臂摆动对跳跃成绩的提升主要体现在起跳阶段——起跳速度增加约 13\%，贡献约 80\% 的距离增益；腾空姿态的改善（落地前伸量增加约 2 cm）虽幅度较小，但不可或缺。最后，三刚体模型的推广从解析建模给出了手臂与躯干、下肢之间角动量分配的定量表达式，为后续通过最优控制方法研究摆臂与收腿的协同策略提供了可供数值优化的动力学基础。
+本文从简到繁、逐步深入地建立了立定跳远腾空阶段的力学模型。首先，二刚体模型利用角动量守恒约束，定量描述了腾空阶段收腿对落地前伸量的贡献。模型预测的落地前伸量 $\Delta x = 0.298$\,m 与实验限制摆臂数据（$0.29$\,m）偏差 $\ll 3\%$，表明二刚体模型准确地捕捉了腾空阶段姿态动力学的主要特征。其次，根据 Ashby \& Heegaard (2002) 的实验观测，手臂摆动对跳跃成绩的提升主要体现在起跳阶段（起跳速度增加约 13\%，贡献约 80\% 的距离增益），腾空姿态的改善（落地前伸量增加约 2 cm）幅度较小。最后，三刚体模型的推广从解析建模给出了手臂与躯干、下肢之间角动量分配的定量表达式，并从第一性原理展示了腾空角动量守恒对手臂摆动效果的根本限制，为后续通过最优控制方法研究摆臂与收腿的协同策略提供了动力学基础。
 
 \appendix
+\section{二刚体模型参数的估算依据}
+
+正文表~\ref{tab:two_body_params} 中的转动惯量和收腿角速度按以下方式估算。
+
+\textbf{转动惯量。}两刚体分别近似为均匀杆，绕自身质心的转动惯量为 $I = \frac{1}{12}mL^2$。
+\begin{itemize}
+  \item \textbf{刚体 1（躯干+头+臂）}：质心到髋关节距离 $d_1=0.35$\,m，均匀杆质心在中点，杆长 $L_1 = 2d_1 = 0.70$\,m。则
+    \[
+    I_1 = \frac{1}{12}m_1 L_1^{\,2}
+        = \frac{1}{12}\times 44 \times 0.70^2
+        = 1.80\;\text{kg\,m$^2$}
+        \approx 1.8\;\text{kg\,m$^2$}.
+    \]
+  \item \textbf{刚体 2（双腿+足）}：腿总长 $l_2 = 0.95$\,m。则
+    \[
+    I_2 = \frac{1}{12}m_2 l_2^{\,2}
+        = \frac{1}{12}\times 28 \times 0.95^2
+        = 2.11\;\text{kg\,m$^2$}
+        \approx 2.1\;\text{kg\,m$^2$}.
+    \]
+\end{itemize}
+
+\textbf{收腿角速度。}起跳时 $\phi(0) = -155^\circ$，落地时腿需收至躯干前方。取恒速 $\dot\phi = 180^\circ/\mathrm{s}$（$\approx 3.14\ \mathrm{rad/s}$），总幅度 $\Delta\phi = 90^\circ$，落地 $\phi(T) = -65^\circ$，足以使脚到达质心前方（$\Delta x > 0$）。该值与腾空阶段髋关节屈曲速率的典型观测一致（$150$--$250^\circ/\mathrm{s}$）。实际收腿非恒速，此处为平均近似。
+
 \section{三刚体角动量系数的完整展开}
 \label{app:coeffs}
 

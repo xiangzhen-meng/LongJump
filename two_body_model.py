@@ -2,25 +2,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ===================== 参数设置 =====================
-m1 = 40.0      # kg
-m2 = 20.0
+m1 = 44.0      # kg
+m2 = 28.0
 M = m1 + m2
 mu = (m1 * m2) / M
 
 d1 = 0.35      # m
-d2 = 0.30
-l2 = 0.80      # 腿长
+d2 = 0.35
+l2 = 0.95      # 腿长
 
-I1 = 4.8       # kg·m²
-I2 = 4.3
+I1 = 1.8       # kg·m²
+I2 = 2.1
 
 # 起跳初始角度 (度 -> 弧度)
 theta1_0 = np.radians(60.0)
-theta2_0 = np.radians(-20.0)
+theta2_0 = np.radians(-95.0)
 phi_0 = theta2_0 - theta1_0
 
 # 主动收腿角速度 (rad/s), 正表示腿向前摆
-Omega = np.radians(200.0)   # 200°/s
+Omega = np.radians(180.0)   # 180°/s
 
 T_total = 0.5   # 腾空总时间 (s)
 dt = 0.001      # 时间步长

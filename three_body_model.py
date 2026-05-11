@@ -1,20 +1,20 @@
 import numpy as np
 
-# ===================== 三刚体模型参数 =====================
-m_T = 34.0       # kg, 躯干+头
-m_A = 6.0        # kg, 双臂
-m_L = 20.0       # kg, 双腿+足
+# ===================== 三刚体模型参数（基于 Ashby 受试者 72 kg, 1.81 m） =====================
+m_T = 37.0       # kg, 躯干+头
+m_A = 7.0        # kg, 双臂
+m_L = 28.0       # kg, 双腿+足
 M = m_T + m_A + m_L
 
 d_T = 0.32       # m, 躯干质心到髋关节
 d_A = 0.28       # m, 臂质心到肩关节
-d_L = 0.30       # m, 腿质心到髋关节
-L_T = 0.55       # m, 髋到肩(躯干长)
-l_L = 0.80       # m, 腿长(髋到脚底)
+d_L = 0.35       # m, 腿质心到髋关节
+L_T = 0.60       # m, 髋到肩(躯干长)
+l_L = 0.95       # m, 腿长(髋到脚底)
 
-I_T = 3.5        # kg m^2
+I_T = 1.5        # kg m^2, 杆模型估算
 I_A = 0.3
-I_L = 4.3
+I_L = 2.1
 
 # ===================== 约化距离系数 =====================
 beta_T = (m_T * d_T + m_A * L_T) / M
@@ -54,17 +54,21 @@ T_total = 0.5       # 腾空时间 (s)
 dt = 0.001
 
 # 收腿角速度 (rad/s)
-phi_dot_LT_const = np.radians(200.0)  # 200 deg/s
+phi_dot_LT_const = np.radians(180.0)  # 180 deg/s
 
-# 摆臂角速度 (rad/s): 正弦半波, 向前摆
-A_arm = np.radians(100.0)  # 幅值 100 deg/s
+# 摆臂角速度 (rad/s): 分段恒速，前 0.25s 前摆，后 0.25s 后摆
+phi_dot_TA_fwd = np.radians(180.0)   # +180 deg/s
+phi_dot_TA_bwd = np.radians(-180.0)  # -180 deg/s
 def phi_dot_TA(t):
-    return A_arm * np.sin(np.pi * t / T_total)
+    if t < 0.25:
+        return phi_dot_TA_fwd
+    else:
+        return phi_dot_TA_bwd
 
 # ===================== 初始角度 =====================
 theta_T_0 = np.radians(60.0)    # deg
 phi_TA_0  = np.radians(30.0)    # 臂相对躯干 +30 deg
-phi_LT_0  = np.radians(-80.0)   # 腿相对躯干 -80 deg
+phi_LT_0  = np.radians(-155.0)  # 腿相对躯干 -155 deg
 
 theta_T = theta_T_0
 phi_TA  = phi_TA_0
@@ -131,7 +135,7 @@ print(f"  K_TA = {K_TA:.4f}, K_TL = {K_TL:.4f}, K_AL = {K_AL:.4f}")
 print()
 print(f"  初始 theta_T = {np.degrees(theta_T_0):.1f} deg")
 print(f"  初始 phi_TA  = {np.degrees(phi_TA_0):.1f} deg (臂在前)")
-print(f"  初始 phi_LT  = {np.degrees(phi_LT_0):.1f} deg (腿在后)")
+print(f"  初始 phi_LT  = {np.degrees(phi_LT_0):.0f} deg (腿在后)")
 print(f"  初始 Delta_x  = {dx_vals[0]:.4f} m = {dx_vals[0]*100:.1f} cm")
 print()
 print(f"  落地 theta_T  = {np.degrees(theta_T_vals[-1]):.1f} deg")
@@ -140,8 +144,7 @@ print(f"  落地 phi_LT   = {np.degrees(phi_LT):.1f} deg")
 print(f"  落地 Delta_x  = {dx_vals[-1]:.4f} m = {dx_vals[-1]*100:.2f} cm")
 print()
 
-# 对比: 相同收腿参数下，如果摆臂速率恒为零 (JRA 三体版)
-# 重新积分
+# 对比: 相同收腿参数下，摆臂速率恒为零 (三体固定臂)
 theta_T2 = theta_T_0
 phi_TA2  = phi_TA_0
 phi_LT2  = phi_LT_0
@@ -172,7 +175,10 @@ while t2 < T_total - dt / 2:
     if dx2_initial is None:
         dx2_initial = dx2
 
-print(f"  对照 (固定摆臂, pd_TA=0):")
+print(f"  三体固定臂对照:")
+print(f"    落地 theta_T  = {np.degrees(theta_T2):.1f} deg")
 print(f"    落地 Delta_x = {dx2:.4f} m = {dx2*100:.2f} cm")
 print(f"    摆臂带来 Delta_x 增量 = {(dx_vals[-1] - dx2)*100:.2f} cm")
-print(f"  二体模型 Delta_x = 0.3493 m = 34.93 cm")
+print()
+print(f"  二体模型 JRA 对照: Delta_x = 0.298 m")
+print(f"  实验 JRA Delta_x = 0.29 ± 0.01 m")
