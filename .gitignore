@@ -1,0 +1,29 @@
+# --- VS Code ---
+.vscode/
+
+# --- LaTeX 编译中间文件 ---
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.blg
+*.bbl
+*.xdv
+*.nav
+*.snm
+*.vrb
+*.run.xml
+*.bcf
+
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+.venv/
+env/
+venv/
+
+.DS_Store
