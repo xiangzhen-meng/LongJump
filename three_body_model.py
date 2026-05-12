@@ -67,7 +67,7 @@ def phi_dot_TA(t):
 
 # ===================== 初始角度 =====================
 theta_T_0 = np.radians(60.0)    # deg
-phi_TA_0  = np.radians(30.0)    # 臂相对躯干 +30 deg
+phi_TA_0  = np.radians(145.0)   # 臂相对躯干 145 deg (匹配实验 JFA)
 phi_LT_0  = np.radians(-155.0)  # 腿相对躯干 -155 deg
 
 theta_T = theta_T_0
@@ -134,7 +134,7 @@ print(f"  K_TT = {K_TT:.4f}, K_AA = {K_AA:.4f}, K_LL = {K_LL:.4f}")
 print(f"  K_TA = {K_TA:.4f}, K_TL = {K_TL:.4f}, K_AL = {K_AL:.4f}")
 print()
 print(f"  初始 theta_T = {np.degrees(theta_T_0):.1f} deg")
-print(f"  初始 phi_TA  = {np.degrees(phi_TA_0):.1f} deg (臂在前)")
+print(f"  初始 phi_TA  = {np.degrees(phi_TA_0):.0f} deg (臂贴身前)")
 print(f"  初始 phi_LT  = {np.degrees(phi_LT_0):.0f} deg (腿在后)")
 print(f"  初始 Delta_x  = {dx_vals[0]:.4f} m = {dx_vals[0]*100:.1f} cm")
 print()
@@ -175,10 +175,48 @@ while t2 < T_total - dt / 2:
     if dx2_initial is None:
         dx2_initial = dx2
 
-print(f"  三体固定臂对照:")
+print(f"  三体JRA (臂贴身前, φ_TA=145°) 对照:")
 print(f"    落地 theta_T  = {np.degrees(theta_T2):.1f} deg")
+print(f"    落地 theta_L  = {np.degrees(theta_T2 + phi_LT2):.1f} deg")
 print(f"    落地 Delta_x = {dx2:.4f} m = {dx2*100:.2f} cm")
 print(f"    摆臂带来 Delta_x 增量 = {(dx_vals[-1] - dx2)*100:.2f} cm")
+print()
+
+# ===================== 三体JRA 臂与躯干平行 (φ_TA = 180°) =====================
+print("  三体JRA (臂平行躯干, φ_TA=180°) 对照:")
+theta_T3 = theta_T_0
+phi_TA3  = np.radians(180.0)   # 臂与躯干平行, 指向髋部
+phi_LT3  = phi_LT_0
+t3 = 0.0
+dx3_initial = None
+while t3 < T_total - dt / 2:
+    pd_LT = phi_dot_LT_const
+    pd_TA = 0.0  # 无摆臂
+    theta_A3 = theta_T3 + phi_TA3
+    theta_L3 = theta_T3 + phi_LT3
+    A_T3, A_A3, A_L3 = compute_A(theta_T3, theta_A3, theta_L3)
+    omega_T3 = -(A_A3 * pd_TA + A_L3 * pd_LT) / (A_T3 + A_A3 + A_L3)
+    theta_T3 += omega_T3 * dt
+    phi_TA3  += pd_TA * dt
+    phi_LT3  += pd_LT * dt
+    t3 += dt
+
+    theta_A3 = theta_T3 + phi_TA3
+    theta_L3 = theta_T3 + phi_LT3
+    cosT3 = np.cos(theta_T3)
+    cosA3 = np.cos(theta_A3)
+    cosL3 = np.cos(theta_L3)
+    x_B3 = l_L * cosL3
+    x_G3 = (m_T * d_T * cosT3
+            + m_A * (L_T * cosT3 + d_A * cosA3)
+            + m_L * d_L * cosL3) / M
+    dx3 = x_B3 - x_G3
+    if dx3_initial is None:
+        dx3_initial = dx3
+
+print(f"    落地 theta_T  = {np.degrees(theta_T3):.1f} deg")
+print(f"    落地 theta_L  = {np.degrees(theta_T3 + phi_LT3):.1f} deg")
+print(f"    落地 Delta_x = {dx3:.4f} m = {dx3*100:.2f} cm")
 print()
 print(f"  二体模型 JRA 对照: Delta_x = 0.298 m")
 print(f"  实验 JRA Delta_x = 0.29 ± 0.01 m")
