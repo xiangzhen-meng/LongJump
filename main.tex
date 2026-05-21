@@ -6,13 +6,13 @@
 \begin{document}
 
 \title{立定跳远中姿态对成绩影响的力学分析}
-\author{孟祥祯}
+\author{xxx}
 \date{\today}
 \maketitle
 
 \begin{abstract}
 立定跳远是一项依赖全身协调发力的运动，姿态调整对跳远成绩有显著提升作用。
-本文首先建立二刚体（躯干+双腿）模型，仅用一个收腿角速度作为主动输入，
+本文首先建立二刚体模型，仅用一个收腿角速度作为主动输入，
 描述腾空阶段通过收腿增加落地前伸量的过程。该模型比 Ashby \& Delp (2006)
 的五刚体模型少三个自由度，且不依赖最优控制算法，并且能将 JRA 条件下的
 落地前伸量预测到 $0.298$\,m，与实验值 $0.29$\,m 偏差小于 $3\%$。
@@ -25,20 +25,33 @@ $0.311$\,m，变化量为 $0.017$\,m，与实验 JFA$-$JRA 的 $+0.02$\,m 同量
 而非腾空阶段的主动摆动。
 \end{abstract}
 
-\section{引言}
+立定跳远是一项典型的全身协调爆发性运动，其成绩不仅取决于下肢蹬伸能力，
+还受到上肢摆动、身体姿态控制和腾空阶段角动量分配的影响。
+关于立定跳远的理论研究，已有工作的关注重点是手臂摆动如何改变起跳动力、
+身体平衡控制以及落地姿态，从而提高最终跳跃距离。
 
-已有研究已证明手臂摆动对立定跳远成绩具有显著影响。
-Ashby \& Heegaard (2002) 的实验表明，自由摆臂可使成绩提高约 21.2\%，
-并将增益分解为起跳速度、起跳前质心水平位移和落地前伸量的变化。
-Ashby \& Delp (2006) 进一步建立五刚体、四自由度的人体模型，
-并通过最优控制仿真复现了实验结果。
+Ashby \& Heegaard (2002) 通过三维运动捕捉和测力台实验，
+比较了自由摆臂（JFA）与限制摆臂（JRA）两种条件下的立定跳远表现，
+并利用二维六环节人体连杆模型估算人体质心运动。
+实验结果表明，自由摆臂可使成绩提高约 $21.2\%$，
+其中约 $71\%$ 的增益来自起跳质心速度提高，约 $22\%$ 来自起跳前质心水平位移增加，
+其余约 $7\%$ 来自落地时脚相对于质心位置的前伸。
+该研究还指出，手臂摆动为运动员提供了额外的平衡和姿态控制能力：
+自由摆臂条件下，运动员可在腾空阶段通过手臂后摆修正身体绕质心的过度前旋；
+而限制摆臂条件下，运动员必须在离地前抑制这种前旋，
+从而出现竖直地面反力提前下降和起跳前不利后旋力矩等现象。
+
+在上述实验基础上，Ashby \& Delp (2006) 进一步建立五刚体、四自由度的人体模型，
+并通过最优控制仿真复现了自由摆臂提高立定跳远成绩的实验结果。
+该模型能够较精确地描述手臂运动对起跳速度、身体姿态和落地位置的综合影响，
+并指出手臂对成绩的主要贡献来自起跳阶段。
 然而，这类模型虽然精确，但自由度较多、计算过程复杂，
-难以直接给出各刚体角动量分配的解析关系；
-实验结果本身也主要停留在现象描述层面，尚不能
-用简洁的力学模型解释腾空阶段姿态调整的主要机制。
+难以直接给出各刚体之间角动量分配的解析关系；
+同时，Ashby \& Heegaard (2002) 的实验研究主要从现象和数据分解层面说明手臂的作用，
+尚不能用简洁的力学模型解释腾空阶段姿态调整的主要机制。
 
 本文的出发点是：能否用远少于五刚体模型的自由度，
-建立一个可解析推导、可直接数值积分的模型，
+建立一个可解析推导的模型，
 并仍然定量解释实验中的落地前伸量？
 为此，本文首先建立二刚体模型（躯干+双腿），
 仅以收腿角速度作为主动输入。
@@ -151,6 +164,29 @@ x_G = x_O + \frac{m_1 d_1 \cos\theta_1 + m_2 d_2 \cos\theta_2}{M}.
 \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{模型参数的估算依据}
+正文表~\ref{tab:two_body_params} 中的转动惯量和收腿角速度按以下方式估算。
+
+转动惯量：两刚体分别近似为均匀杆，绕自身质心的转动惯量为 $I = \frac{1}{12}mL^2$。
+\begin{itemize}
+  \item \textbf{刚体 1（躯干+头+手臂）}：质心到髋关节距离 $d_1=0.35$\,m，均匀杆质心在中点，杆长 $L_1 = 2d_1 = 0.70$\,m。则
+    \[
+    I_1 = \frac{1}{12}m_1 L_1^{\,2}
+        = \frac{1}{12}\times 44 \times 0.70^2
+        = 1.80\;\text{kg\,m$^2$}
+        \approx 1.8\;\text{kg\,m$^2$}.
+    \]
+  \item \textbf{刚体 2（双腿+足）}：腿总长 $l_2 = 0.95$\,m。则
+    \[
+    I_2 = \frac{1}{12}m_2 l_2^{\,2}
+        = \frac{1}{12}\times 28 \times 0.95^2
+        = 2.11\;\text{kg\,m$^2$}
+        \approx 2.1\;\text{kg\,m$^2$}.
+    \]
+\end{itemize}
+
+收腿角速度：起跳时 $\phi(0) = -155^\circ$，落地时腿需收至躯干前方。取恒速 $\dot\phi = 180^\circ/\mathrm{s}$（$\approx 3.14\ \mathrm{rad/s}$），总幅度 $\Delta\phi = 90^\circ$，落地 $\phi(T) = -65^\circ$。实际收腿非恒速，此处为平均近似。
 
 \section{二刚体模型与实验数据的对比}
 
@@ -318,7 +354,35 @@ A_A &= I_A + K_{AA} + K_{AA}^{(TA)} c_{TA} + K_{AA}^{(AL)} c_{AL}, \label{eq:AA}
 A_L &= I_L + K_{LL} + K_{LL}^{(TL)} c_{TL} + K_{LL}^{(AL)} c_{AL}. \label{eq:AL}
 \end{align}
 
-这里 $K_{ii}$ 为常数项（与角度无关），$K_{ii}^{(pq)}$ 为 $\cos(\theta_p-\theta_q)$ 的系数。完整表达式见附录~\ref{app:coeffs}。
+这里 $K_{ii}$ 为常数项（与角度无关），$K_{ii}^{(pq)}$ 为 $\cos(\theta_p-\theta_q)$ 的系数，其完整表达式如下：
+
+常数项：
+\begin{align}
+K_{TT} &= m_T(d_T - \beta_T)^2 + m_A(L_T - \beta_T)^2 + m_L\beta_T^2, \label{eq:KTT} \\
+K_{AA} &= (m_T + m_L)\beta_A^2 + m_A(d_A - \beta_A)^2, \label{eq:KAA_const} \\
+K_{LL} &= (m_T + m_A)\beta_L^2 + m_L(d_L - \beta_L)^2. \label{eq:KLL_const}
+\end{align}
+
+$\cos(\theta_T-\theta_A)$ 的系数：
+\begin{align}
+K_{TT}^{(TA)} = K_{AA}^{(TA)} &= -\,m_T\beta_A(d_T-\beta_T)
+                                 + m_A(d_A-\beta_A)(L_T-\beta_T)
+                                 + m_L\beta_A\beta_T. \label{eq:K_TA}
+\end{align}
+
+$\cos(\theta_T-\theta_L)$ 的系数：
+\begin{align}
+K_{TT}^{(TL)} = K_{LL}^{(TL)} &= -\,m_T\beta_L(d_T-\beta_T)
+                                 - m_A\beta_L(L_T-\beta_T)
+                                 - m_L\beta_T(d_L-\beta_L). \label{eq:K_TL}
+\end{align}
+
+$\cos(\theta_A-\theta_L)$ 的系数：
+\begin{align}
+K_{AA}^{(AL)} = K_{LL}^{(AL)} &= m_T\beta_A\beta_L
+                                 - m_A\beta_L(d_A-\beta_A)
+                                 - m_L\beta_A(d_L-\beta_L). \label{eq:K_AL}
+\end{align}
 
 将式\eqref{eq:three_body_am}改写为：
 \begin{equation}
@@ -471,24 +535,44 @@ JRA 条件下起跳角冲量较小，该近似合理；但若需讨论 JFA 情�
 
 \section{结论}
 
-\textbf{二刚体模型。}
-仅凭一个收腿自由度，该模型以 $<3\%$ 的偏差复现了
-Ashby \& Delp (2006) 五刚体最优控制仿真的 JRA 落地前伸量，
-说明腾空阶段收腿对 $\Delta x$ 的主要贡献可由低自由度解析模型准确描述。
+本文围绕立定跳远中腾空阶段姿态调整对落地前伸量的影响，
+建立了由二刚体模型到三刚体模型的低自由度力学分析框架。
+与已有五刚体最优控制模型相比，本文模型自由度更少，推导过程更直接，
+能够在不依赖复杂优化算法的条件下给出身体各刚体之间角动量分配的解析关系。
 
-\textbf{三刚体模型与静态手臂位置效应。}
-三刚体模型表明，改变手臂的固定姿态即可显著改变落地前伸量：
-$\varphi_{TA}=180^\circ$ 时 $\Delta x=0.294$\,m，$\varphi_{TA}=145^\circ$ 时
-$\Delta x=0.311$\,m，差值为 $0.017$\,m，与实验 JFA$-$JRA 的
-$\Delta x$ 差异（$+0.02$\,m）在量级上接近。与此同时，同一姿态下的
-动态摆臂对 $\Delta x$ 的额外贡献极小（JFA$-$JRA $<0.002$\,m）。
-这提示实验中自由摆臂对落地前伸量的增益，可能相当一部分来自手臂自由姿态
-相较于约束姿态所引起的上体惯性分布变化，而不完全来自腾空阶段手臂的主动摆动。
-该解析框架为后续统一起跳与腾空阶段的力学分析提供了可扩展的基础。
+首先，二刚体模型表明，仅将人体简化为“躯干+双腿”两个刚体，
+并以一个恒定收腿角速度作为主动输入，就能够较好地描述腾空阶段脚相对于质心的前伸过程。
+在采用均匀杆估算转动惯量后，模型预测 JRA 条件下的落地前伸量为
+$\Delta x=0.298$\,m，与 Ashby \& Heegaard (2002) 的实验值
+$0.29$\,m 偏差小于 $3\%$。这说明，腾空阶段收腿运动对落地前伸量的主要贡献，
+可以由低自由度刚体模型较准确地捕捉。
 
-\section*{致谢}
+其次，三刚体模型进一步将手臂从躯干中分离出来，
+直接给出了手臂、躯干和双腿之间的角动量分配关系。
+数值结果表明，手臂固定姿态本身即可显著改变落地前伸量：
+当 $\varphi_{TA}=180^\circ$ 时，模型预测 $\Delta x=0.294$\,m；
+当 $\varphi_{TA}=145^\circ$ 时，模型预测 $\Delta x=0.311$\,m，
+两者差值为 $0.017$\,m，与实验中 JFA 相比 JRA 的落地前伸量增益
+$+0.02$\,m 在量级上接近。这表明，手臂并非只有通过主动摆动才影响跳远成绩；
+其静态位置改变上体惯性分布，也会通过角动量守恒影响躯干和双腿的相对转动。
 
-感谢北京大学物理学院彭士香老师在普通物理课程中的教导与帮助，给我撰写小论文的平台，鼓励我思考生活中的物理知识。感谢北京大学的体测，让我在痛苦中思考出这样的选题。感谢我自己近好多周的推导、算数和打字。
+再次，在相同初始手臂姿态下比较动态摆臂与静态固定手臂，
+模型得到二者落地前伸量差异小于 $0.002$\,m。
+这说明在本文采用的零初态角动量假设下，
+腾空阶段主动摆臂对落地前伸量的直接贡献较小。
+结合 Ashby \& Delp (2006) 关于手臂主要通过起跳阶段提高成绩的结论，
+本文结果提示：实验中自由摆臂条件下落地前伸量的优势，
+可能相当一部分来自手臂自由姿态改变了人体惯性分布，
+而不完全来自腾空阶段的主动摆臂动力学。
+
+综上，本文的主要结论是：立定跳远腾空阶段的落地前伸量，
+可以通过角动量守恒和身体姿态调整得到简洁解释；
+收腿运动决定了脚相对于质心前伸的主要过程，
+而手臂姿态则通过改变上体有效转动惯量影响这一过程。
+本文模型为理解手臂在立定跳远中的作用提供了一个解析、低自由度的力学视角。
+其局限在于尚未完整纳入起跳阶段的地面反作用力、肌肉发力和非零初态角动量。
+后续若将本文的腾空阶段模型与起跳动力学模型结合，
+可进一步解释手臂摆动对总跳跃距离的完整贡献。
 
 \begin{thebibliography}{10}
 
@@ -505,79 +589,4 @@ B.~M.~Ashby and S.~L.~Delp.
 
 \end{thebibliography}
 
-\appendix
-\section{二刚体模型参数的估算依据}
-
-正文表~\ref{tab:two_body_params} 中的转动惯量和收腿角速度按以下方式估算。
-
-转动惯量：两刚体分别近似为均匀杆，绕自身质心的转动惯量为 $I = \frac{1}{12}mL^2$。
-\begin{itemize}
-  \item \textbf{刚体 1（躯干+头+手臂）}：质心到髋关节距离 $d_1=0.35$\,m，均匀杆质心在中点，杆长 $L_1 = 2d_1 = 0.70$\,m。则
-    \[
-    I_1 = \frac{1}{12}m_1 L_1^{\,2}
-        = \frac{1}{12}\times 44 \times 0.70^2
-        = 1.80\;\text{kg\,m$^2$}
-        \approx 1.8\;\text{kg\,m$^2$}.
-    \]
-  \item \textbf{刚体 2（双腿+足）}：腿总长 $l_2 = 0.95$\,m。则
-    \[
-    I_2 = \frac{1}{12}m_2 l_2^{\,2}
-        = \frac{1}{12}\times 28 \times 0.95^2
-        = 2.11\;\text{kg\,m$^2$}
-        \approx 2.1\;\text{kg\,m$^2$}.
-    \]
-\end{itemize}
-
-收腿角速度：起跳时 $\phi(0) = -155^\circ$，落地时腿需收至躯干前方。取恒速 $\dot\phi = 180^\circ/\mathrm{s}$（$\approx 3.14\ \mathrm{rad/s}$），总幅度 $\Delta\phi = 90^\circ$，落地 $\phi(T) = -65^\circ$。实际收腿非恒速，此处为平均近似。
-
-\section{三刚体角动量系数的完整展开}
-\label{app:coeffs}
-
-本节给出正文式\eqref{eq:AT}--\eqref{eq:AL}中所有系数 $K_{ij}^{(\,\cdot\,)}$ 的表达式。
-
-首先系数定义（式\eqref{eq:beta_def}）如下：
-\begin{equation}
-\beta_T = \frac{m_T d_T + m_A L_T}{M},\quad
-\beta_A = \frac{m_A d_A}{M},\quad
-\beta_L = \frac{m_L d_L}{M},\quad
-M = m_T + m_A + m_L.
-\end{equation}
-\subsection*{1. 常数项}
-
-\begin{align}
-K_{TT} &= m_T(d_T - \beta_T)^2 + m_A(L_T - \beta_T)^2 + m_L\beta_T^2, \label{eq:KTT} \\
-K_{AA} &= (m_T + m_L)\beta_A^2 + m_A(d_A - \beta_A)^2, \label{eq:KAA_const} \\
-K_{LL} &= (m_T + m_A)\beta_L^2 + m_L(d_L - \beta_L)^2. \label{eq:KLL_const}
-\end{align}
-
-\subsection*{2. $\cos(\theta_T-\theta_A)$ 的系数}
-
-\begin{align}
-K_{TT}^{(TA)} = K_{AA}^{(TA)} &= -\,m_T\beta_A(d_T-\beta_T)
-                                 + m_A(d_A-\beta_A)(L_T-\beta_T)
-                                 + m_L\beta_A\beta_T. \label{eq:K_TA}
-\end{align}
-
-\subsection*{3. $\cos(\theta_T-\theta_L)$ 的系数}
-
-\begin{align}
-K_{TT}^{(TL)} = K_{LL}^{(TL)} &= -\,m_T\beta_L(d_T-\beta_T)
-                                 - m_A\beta_L(L_T-\beta_T)
-                                 - m_L\beta_T(d_L-\beta_L). \label{eq:K_TL}
-\end{align}
-
-\subsection*{4. $\cos(\theta_A-\theta_L)$ 的系数}
-
-\begin{align}
-K_{AA}^{(AL)} = K_{LL}^{(AL)} &= m_T\beta_A\beta_L
-                                 - m_A\beta_L(d_A-\beta_A)
-                                 - m_L\beta_A(d_L-\beta_L). \label{eq:K_AL}
-\end{align}
-
 \end{document}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{fig_phiTA_sweep.pdf}
-    \caption{Enter Caption}
-    \label{fig:placeholder}
-\end{figure}
